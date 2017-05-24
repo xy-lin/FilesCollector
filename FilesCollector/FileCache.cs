@@ -20,14 +20,15 @@ namespace FilesUtility
 
         public FileCache(string fileCacheName)
         {
-            _streamWriter = new StreamWriter(fileCacheName, true);
-
             string[] existingFiles = File.ReadAllLines(fileCacheName);
 
             foreach (string existingFile in existingFiles)
             {
                 _sizesCache.Add(Double.Parse(existingFile));
             }
+
+            _streamWriter = new StreamWriter(fileCacheName, true);
+            _streamWriter.Write(Environment.NewLine);
         }
 
 
@@ -36,7 +37,7 @@ namespace FilesUtility
             FileStream fileSizeCache = File.Create(fileCacheName);
             fileSizeCache.Close();
 
-            string[] files = Directory.GetFiles(detDir, fileType);
+            string[] files = Directory.GetFiles(detDir);
 
             _streamWriter = new StreamWriter(fileCacheName, true);
 

@@ -28,7 +28,7 @@ namespace FilesUtility
             }
 
             _streamWriter = new StreamWriter(fileCacheName, true);
-            _streamWriter.Write(Environment.NewLine);
+            //_streamWriter.Write(Environment.NewLine);
         }
 
 

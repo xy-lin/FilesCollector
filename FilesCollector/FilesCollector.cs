@@ -9,6 +9,13 @@ namespace FilesUtility
         private static readonly string _fileSizeCache = Configuration.GetAppSetting("file_cache");
         private static readonly string _fileType = Configuration.GetAppSetting("file_type");
 
+        private IMessanger _logger;
+
+        public FilesCollector(IMessanger logger)
+        {
+            _logger = logger;
+        }
+        
         internal void Collect(string sourceDir, string dstDir)
         {
             if (sourceDir == null || dstDir == null)
@@ -42,6 +49,8 @@ namespace FilesUtility
                                     File.Copy(sourceFile, destFile, false);
                                       
                                     fileCache.AddEntry(sourceFileStream.Length);
+
+                                    _logger.Add($"File Added: {fileName}");
                                 }
                             }
                         }
@@ -58,6 +67,7 @@ namespace FilesUtility
             }
 
             fileCache.Dispose();
+            _logger.Dispose();
         }
 
         private static bool CanCopy(Image img)
